@@ -285,22 +285,20 @@ public class GraphicsDisplay extends JPanel {
     }
 
     protected int findSelectedPoint(int x, int y) {
-        if (this.graphicsData == null) {
-            return -1;
-        } else {
+        if (this.graphicsData != null) {
             int pos = 0;
 
-            for(Iterator var5 = this.graphicsData.iterator(); var5.hasNext(); ++pos) {
-                Double[] point = (Double[])var5.next();
-                java.awt.geom.Point2D.Double screenPoint = this.translateXYtoPoint(point[0], point[1]);
-                double distance = (screenPoint.getX() - (double)x) * (screenPoint.getX() - (double)x) + (screenPoint.getY() - (double)y) * (screenPoint.getY() - (double)y);
+            for (Iterator var5 = this.graphicsData.iterator(); var5.hasNext(); ++pos) {
+                Double[] point = (Double[]) var5.next();
+                Point2D.Double screenPoint = this.translateXYtoPoint(point[0], point[1]);
+                double distance = (screenPoint.getX() - (double) x) * (screenPoint.getX() - (double) x) + (screenPoint.getY() - (double) y) * (screenPoint.getY() - (double) y);
                 if (distance < 100.0D) {
                     return pos;
                 }
             }
 
-            return -1;
         }
+        return -1;
     }
 
     public void reset() {
@@ -386,8 +384,7 @@ public class GraphicsDisplay extends JPanel {
                     newY = GraphicsDisplay.this.viewport[1][1];
                 }
 
-                ((Double[])GraphicsDisplay.this.graphicsData.get(GraphicsDisplay.this.selectedMarker))[1] = newY;
-                GraphicsDisplay.this.repaint();
+                GraphicsDisplay.this.graphicsData.get(GraphicsDisplay.this.selectedMarker)[1] = newY;
             } else {
                 double width = (double)ev.getX() - GraphicsDisplay.this.selectionRect.getX();
                 if (width < 5.0D) {
@@ -400,8 +397,8 @@ public class GraphicsDisplay extends JPanel {
                 }
 
                 GraphicsDisplay.this.selectionRect.setFrame(GraphicsDisplay.this.selectionRect.getX(), GraphicsDisplay.this.selectionRect.getY(), width, height);
-                GraphicsDisplay.this.repaint();
             }
+            GraphicsDisplay.this.repaint();
 
         }
     }
